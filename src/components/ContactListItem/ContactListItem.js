@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import css from './ContactListItem.module.css';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/formSlice';
+import { deleteContact } from 'redux/operations';
 
-export const ContactListItem = ({ name, number, id }) => {
+export const ContactListItem = ({ name, phone, id }) => {
   const dispatch = useDispatch();
   return (
     <li className={css.li} id={id}>
-      {name}: {number}
+      {name}: {phone}
       <button
         className={css.button}
         type="button"

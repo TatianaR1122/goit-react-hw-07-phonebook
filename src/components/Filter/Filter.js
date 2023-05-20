@@ -1,6 +1,6 @@
 import React from 'react';
 import css from './Filter.module.css';
-import { changeFilter } from 'redux/formSlice';
+import { FILTER } from 'redux/formSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from 'redux/selector';
 
@@ -9,8 +9,7 @@ export const Filter = () => {
   const filter = useSelector(getFilter);
 
   const handleChange = evt => {
-    const { value } = evt.target;
-    dispatch(changeFilter(value));
+    dispatch(FILTER(evt.target.value));
   };
   return (
     <label className={css.label}>

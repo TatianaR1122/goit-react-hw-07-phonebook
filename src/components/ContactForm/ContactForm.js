@@ -2,24 +2,24 @@ import css from './ContactForm.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selector';
-import { addcontacts } from 'redux/formSlice';
+import { addContact } from 'redux/operations';
 import { nanoid } from '@reduxjs/toolkit';
 
-export default function ContactForm({ onSubmit }) {
+export default function ContactForm() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleChange = event => {
     const { name, value } = event.currentTarget;
-    name === 'name' ? setName(value) : setNumber(value);
+    name === 'name' ? setName(value) : setPhone(value);
   };
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    const contact = { name, number, id: nanoid() };
+    const newContact = { name, phone, id: nanoid() };
 
     if (
       contacts.find(
@@ -27,17 +27,17 @@ export default function ContactForm({ onSubmit }) {
       )
     ) {
       alert(`${name} is already in contacts.`);
-    } else if (contacts.find(contact => contact.number === number)) {
-      alert(`${number} is already in contacts.`);
+    } else if (contacts.find(contact => contact.phone === phone)) {
+      alert(`${phone} is already in contacts.`);
     } else {
-      dispatch(addcontacts(contact));
+      dispatch(addContact(newContact));
       reset();
     }
   };
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -60,8 +60,8 @@ export default function ContactForm({ onSubmit }) {
         <input
           className={css.input}
           type="tel"
-          name="number"
-          value={number}
+          name="phone"
+          value={phone}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

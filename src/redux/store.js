@@ -1,8 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { formReducer } from './formSlice';
+import { filterReducer, formReducer } from './formSlice';
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -10,18 +8,12 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['filter'],
-};
-
-const persistedReducer = persistReducer(persistConfig, formReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    contacts: formReducer,
+    filter: filterReducer,
+  },
 
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
@@ -30,5 +22,3 @@ export const store = configureStore({
       },
     }),
 });
-
-export const persistor = persistStore(store);
