@@ -6,14 +6,14 @@ import css from '../App/App.module.css';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { fetchContacts } from 'redux/operations';
-import { getContacts, getError, getIsLoading } from 'redux/selector';
+import { selectContacts, selectError, selectIsLoading } from 'redux/selector';
 
 export default function App() {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  const items = useSelector(getContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const items = useSelector(selectContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
